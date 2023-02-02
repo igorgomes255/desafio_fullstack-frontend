@@ -1,10 +1,9 @@
-import { Link } from "react-router-dom";
 import DivInput from "../../components/input";
-import { useUserContext } from "../../contexts/userContext";
+import { useRegisterContext } from "../../contexts/registerContext";
 import { Container, LinkStyled } from "./styles";
 
 const Register = () => {
-  const { register, handleSubmit, errors, submitUser } = useUserContext();
+  const { register, handleSubmit, errors, submitUser } = useRegisterContext();
 
   return (
     <Container>

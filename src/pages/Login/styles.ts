@@ -51,3 +51,19 @@ export const LinkStyled = styled(Link)`
 
   color: #f8f9fa;
 `;
+
+export const DivEye = styled.div`
+  background-color: transparent;
+  position: relative;
+
+  div {
+    width: 40px;
+    height: 40px;
+    bottom: 20px;
+    left: 170px;
+    border-radius: 50%;
+    position: absolute;
+    background: transparent;
+    cursor: pointer;
+  }
+`;
