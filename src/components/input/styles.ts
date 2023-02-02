@@ -5,7 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
-  gap: 10px;
+  gap: 6px;
 
   label {
     color: #d3d3d3;
@@ -29,7 +29,7 @@ export const Container = styled.div`
     font-size: 12px;
     line-height: 0px;
 
-    color: red;
+    color: #dc143c;
     margin-bottom: 20px;
   }
 `;
