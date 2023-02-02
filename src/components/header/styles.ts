@@ -30,10 +30,3 @@ export const Container = styled.header`
 export const DivLogo = styled.div`
   margin-left: 50px;
 `;
-
-export const Main = styled.main`
-  display: flex;
-  justify-content: center;
-
-  margin-top: 50px;
-`;
