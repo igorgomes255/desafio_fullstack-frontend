@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import DivInput from "../../components/input";
-import { useUserContext } from "../../contexts/userContext";
+import { useLoginContext } from "../../contexts/loginContext";
 
 const Login = () => {
-  const { register, handleSubmit, errors, loginUser } = useUserContext();
+  const { register, handleSubmit, errors, loginUser } = useLoginContext();
 
   return (
     <div>

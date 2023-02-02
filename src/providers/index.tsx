@@ -1,11 +1,14 @@
 import ContactProvider from "../contexts/contactContext";
+import LoginProvider from "../contexts/loginContext";
 import UserProvider from "../contexts/userContext";
 import { IAuthProvider } from "../interfaces";
 
 const Providers = ({ children }: IAuthProvider) => {
   return (
     <UserProvider>
-      <ContactProvider>{children}</ContactProvider>;
+      <LoginProvider>
+        <ContactProvider>{children}</ContactProvider>
+      </LoginProvider>
     </UserProvider>
   );
 };

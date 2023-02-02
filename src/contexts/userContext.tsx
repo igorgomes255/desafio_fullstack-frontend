@@ -19,17 +19,11 @@ interface IUser {
   phone: string;
 }
 
-interface ILoginUser {
-  email: string;
-  password: string;
-}
-
 interface IUserContext {
   register: UseFormRegister<IDataUser>;
   handleSubmit: UseFormHandleSubmit<IDataUser>;
   errors: FieldErrorsImpl<IDataUser>;
   submitUser: (data: IDataUser) => void;
-  loginUser: (data: ILoginUser) => void;
   user: IUser[];
 }
 
@@ -59,26 +53,8 @@ const UserProvider = ({ children }: IAuthProvider) => {
     api
       .post("/users", data)
       .then((response: AxiosResponse) => {
+        console.log(response.data);
         setUser(response.data);
-      })
-      .catch((err: AxiosError) => {
-        console.log(err.response?.data);
-      });
-  };
-
-  const loginUser = (data: ILoginUser) => {
-    console.log(data);
-    api
-      .post("/login", data)
-      .then((response: AxiosResponse) => {
-        console.log(response.data.token);
-
-        window.localStorage.clear();
-        window.localStorage.setItem("@token", response.data.token);
-
-        setTimeout(() => {
-          navigate("/dashboard", { replace: true });
-        }, 3000);
       })
       .catch((err: AxiosError) => {
         console.log(err.response?.data);
@@ -87,7 +63,7 @@ const UserProvider = ({ children }: IAuthProvider) => {
 
   return (
     <UserContext.Provider
-      value={{ register, handleSubmit, errors, submitUser, loginUser, user }}
+      value={{ register, handleSubmit, errors, submitUser, user }}
     >
       {children}
     </UserContext.Provider>

@@ -16,3 +16,8 @@ export interface IDataUser {
   phone: string;
   password: string;
 }
+
+export interface IDataLogin {
+  email: string;
+  password: string;
+}
