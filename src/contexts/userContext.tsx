@@ -4,23 +4,16 @@ import { AxiosError, AxiosResponse } from "axios";
 import { IAuthProvider } from "../interfaces";
 import { useNavigate } from "react-router-dom";
 
-interface IUser {
-  id: string;
-  full_name: string;
-  email: string;
-  password: string;
-  phone: string;
-}
-
 interface IUserContext {
-  user: IUser[];
+  user: any;
   loading: boolean;
+  logout: () => void;
 }
 
 export const UserContext = createContext({} as IUserContext);
 
 const UserProvider = ({ children }: IAuthProvider) => {
-  const [user, setUser] = useState<IUser[]>([]);
+  const [user, setUser] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const token = localStorage.getItem("@token");
@@ -48,8 +41,13 @@ const UserProvider = ({ children }: IAuthProvider) => {
     setLoading(false);
   }, [token]);
 
+  const logout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   return (
-    <UserContext.Provider value={{ user, loading }}>
+    <UserContext.Provider value={{ user, loading, logout }}>
       {children}
     </UserContext.Provider>
   );
