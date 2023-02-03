@@ -4,6 +4,7 @@ import {
   useState,
   Dispatch,
   SetStateAction,
+  useEffect,
 } from "react";
 import * as yup from "yup";
 import {
@@ -16,6 +17,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import api from "../services/api";
 import { AxiosError, AxiosResponse } from "axios";
 import { IAuthProvider, IDataContact } from "../interfaces";
+import { useUserContext } from "./userContext";
 
 interface IContactContext {
   register: UseFormRegister<IDataContact>;
@@ -24,12 +26,16 @@ interface IContactContext {
   submitContact: (data: IDataContact) => void;
   modalAdd: boolean;
   setModalAdd: Dispatch<SetStateAction<boolean>>;
+  contacts: IDataContact[];
 }
 
 export const ContactContext = createContext({} as IContactContext);
 
 const ContactProvider = ({ children }: IAuthProvider) => {
+  const { token } = useUserContext();
   const [modalAdd, setModalAdd] = useState(false);
+  const [contact, setContact] = useState<IDataContact[]>([]);
+  const [contacts, setContacts] = useState<IDataContact[]>([]);
 
   const schema = yup.object().shape({
     full_name: yup.string().required("Campo obrigatório"),
@@ -47,14 +53,35 @@ const ContactProvider = ({ children }: IAuthProvider) => {
 
   const submitContact = (data: IDataContact) => {
     api
-      .post("/contact", data)
+      .post("/contact", data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response: AxiosResponse) => {
-        console.log(response.data);
+        setContact(response.data);
       })
       .catch((err: AxiosError) => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    api
+      .get("/contact", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response: AxiosResponse) => {
+        setContacts(response.data);
+      })
+      .catch((err: AxiosError) => {
+        console.log(err);
+      });
+  }, [contact]);
 
   return (
     <ContactContext.Provider
@@ -65,6 +92,7 @@ const ContactProvider = ({ children }: IAuthProvider) => {
         submitContact,
         modalAdd,
         setModalAdd,
+        contacts,
       }}
     >
       {children}

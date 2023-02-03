@@ -25,7 +25,7 @@ export const ModalHeader = styled.div`
 
   padding: 12px;
 
-  margin-bottom: 32px;
+  margin-bottom: 2px;
 
   background-color: #343b41;
   border-radius: 4px 4px 0px 0px;
@@ -58,18 +58,17 @@ export const ModalHeader = styled.div`
   }
 `;
 
-export const FormTech = styled.form`
+export const DivInfo = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  margin-left: 60px;
 
-  margin-left: 20px;
-
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  p {
+    width: 200px;
+    height: 35px;
+    border-radius: 4px;
+    border: 1px solid #dde6e9;
+    font-family: "Source Sans Pro";
   }
 
   button {
@@ -79,6 +78,17 @@ export const FormTech = styled.form`
     border-radius: 4px;
     font-family: "Source Sans Pro";
     background-color: #6f8faf;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+
+  .delete_button {
+    width: 200px;
+    height: 35px;
+    font-weight: 700;
+    border-radius: 4px;
+    font-family: "Source Sans Pro";
+    background-color: #6e260e;
     cursor: pointer;
   }
 `;

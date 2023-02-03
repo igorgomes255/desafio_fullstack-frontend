@@ -21,3 +21,9 @@ export interface IDataLogin {
   email: string;
   password: string;
 }
+
+export interface IEditUser {
+  full_name?: string;
+  email?: string;
+  phone?: string;
+}

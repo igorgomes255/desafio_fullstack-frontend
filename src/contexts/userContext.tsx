@@ -1,13 +1,27 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import api from "../services/api";
 import { AxiosError, AxiosResponse } from "axios";
-import { IAuthProvider } from "../interfaces";
+import { IAuthProvider, IEditUser } from "../interfaces";
 import { useNavigate } from "react-router-dom";
 
 interface IUserContext {
   user: any;
+  setUser: any;
   loading: boolean;
   logout: () => void;
+  token: string | null;
+  modalUser: boolean;
+  setModalUser: Dispatch<SetStateAction<boolean>>;
+  modalEditUser: boolean;
+  setModalEditUser: Dispatch<SetStateAction<boolean>>;
+  setEditUser: Dispatch<SetStateAction<string>>;
 }
 
 export const UserContext = createContext({} as IUserContext);
@@ -15,6 +29,9 @@ export const UserContext = createContext({} as IUserContext);
 const UserProvider = ({ children }: IAuthProvider) => {
   const [user, setUser] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [modalUser, setModalUser] = useState(false);
+  const [modalEditUser, setModalEditUser] = useState(false);
+  const [editUser, setEditUser] = useState<string>("");
 
   const token = localStorage.getItem("@token");
 
@@ -39,7 +56,7 @@ const UserProvider = ({ children }: IAuthProvider) => {
       navigate("/");
     }
     setLoading(false);
-  }, [token]);
+  }, [token, editUser]);
 
   const logout = () => {
     localStorage.clear();
@@ -47,7 +64,20 @@ const UserProvider = ({ children }: IAuthProvider) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, loading, logout }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        loading,
+        logout,
+        token,
+        modalUser,
+        setModalUser,
+        modalEditUser,
+        setModalEditUser,
+        setEditUser,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -8,14 +8,21 @@ interface IDivInput {
   placeholder: string;
   errors: any;
   type?: string;
+  value?: string;
 }
 
 const DivInput = forwardRef<HTMLInputElement, IDivInput>(
-  ({ label, placeholder, errors, type, children, ...register }, ref) => {
+  ({ label, placeholder, errors, type, value, children, ...register }, ref) => {
     return (
       <Container>
         <label>{label}</label>
-        <input placeholder={placeholder} type={type} {...register} ref={ref} />
+        <input
+          placeholder={placeholder}
+          type={type}
+          value={value}
+          {...register}
+          ref={ref}
+        />
         <span>{errors}</span> {children}
       </Container>
     );
