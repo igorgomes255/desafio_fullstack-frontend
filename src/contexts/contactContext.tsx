@@ -93,7 +93,7 @@ const ContactProvider = ({ children }: IAuthProvider) => {
           console.log(err.response?.data);
         });
     }
-  }, [contact, token, editContacts]);
+  }, [token, contact, editContacts]);
 
   return (
     <ContactContext.Provider
