@@ -8,8 +8,10 @@ import {
 } from "react";
 import api from "../services/api";
 import { AxiosError, AxiosResponse } from "axios";
-import { IAuthProvider, IEditUser } from "../interfaces";
+import { IAuthProvider } from "../interfaces";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface IUserContext {
   user: any;
@@ -50,7 +52,7 @@ const UserProvider = ({ children }: IAuthProvider) => {
           setUser(response.data);
         })
         .catch((err: AxiosError) => {
-          console.log(err);
+          console.log(err.response?.data);
         });
     } else {
       navigate("/");
@@ -61,6 +63,7 @@ const UserProvider = ({ children }: IAuthProvider) => {
   const logout = () => {
     localStorage.clear();
     navigate("/");
+    toast.success("Até uma próxima!!!", { theme: "dark" });
   };
 
   return (

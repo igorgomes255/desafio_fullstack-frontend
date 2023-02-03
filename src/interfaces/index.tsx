@@ -5,6 +5,7 @@ export interface IAuthProvider {
 }
 
 export interface IDataContact {
+  id: string;
   full_name: string;
   email: string;
   phone: string;
@@ -23,6 +24,12 @@ export interface IDataLogin {
 }
 
 export interface IEditUser {
+  full_name?: string;
+  email?: string;
+  phone?: string;
+}
+
+export interface IEditContact {
   full_name?: string;
   email?: string;
   phone?: string;

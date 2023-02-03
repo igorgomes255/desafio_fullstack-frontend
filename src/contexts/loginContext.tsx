@@ -11,6 +11,8 @@ import api from "../services/api";
 import { AxiosError, AxiosResponse } from "axios";
 import { IAuthProvider, IDataLogin } from "../interfaces";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface IUserContext {
   register: UseFormRegister<IDataLogin>;
@@ -38,11 +40,10 @@ const LoginProvider = ({ children }: IAuthProvider) => {
   });
 
   const loginUser = (data: IDataLogin) => {
-    console.log(data);
     api
       .post("/login", data)
       .then((response: AxiosResponse) => {
-        console.log(response.data.token);
+        toast.success("Login efetuado com sucesso!", { theme: "dark" });
 
         window.localStorage.clear();
         window.localStorage.setItem("@token", response.data.token);
@@ -53,6 +54,8 @@ const LoginProvider = ({ children }: IAuthProvider) => {
       })
       .catch((err: AxiosError) => {
         console.log(err.response?.data);
+
+        toast.error("E-mail ou senha inválidos!", { theme: "dark" });
       });
   };
 

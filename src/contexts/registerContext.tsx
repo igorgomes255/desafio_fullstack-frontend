@@ -11,6 +11,9 @@ import { IAuthProvider, IDataUser } from "../interfaces";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AxiosError, AxiosResponse } from "axios";
 import api from "../services/api";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 interface IUserContext {
   register: UseFormRegister<IDataUser>;
@@ -22,6 +25,8 @@ interface IUserContext {
 export const RegisterContext = createContext({} as IUserContext);
 
 const RegisterProvider = ({ children }: IAuthProvider) => {
+  const navigate = useNavigate();
+
   const schema = yup.object().shape({
     full_name: yup.string().required("Campo obrigatório"),
     email: yup.string().required("Campo obrigatório"),
@@ -41,10 +46,16 @@ const RegisterProvider = ({ children }: IAuthProvider) => {
     api
       .post("/users", data)
       .then((response: AxiosResponse) => {
-        console.log(response.data);
+        toast.success("Usuário registrado", { theme: "dark" });
+
+        setTimeout(() => {
+          navigate("/", { replace: true });
+        }, 3000);
       })
       .catch((err: AxiosError) => {
         console.log(err.response?.data);
+
+        toast.error("Algo deu errado", { theme: "dark" });
       });
   };
 

@@ -18,6 +18,8 @@ import api from "../services/api";
 import { AxiosError, AxiosResponse } from "axios";
 import { IAuthProvider, IDataContact } from "../interfaces";
 import { useUserContext } from "./userContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface IContactContext {
   register: UseFormRegister<IDataContact>;
@@ -61,27 +63,34 @@ const ContactProvider = ({ children }: IAuthProvider) => {
       })
       .then((response: AxiosResponse) => {
         setContact(response.data);
+        setModalAdd(false);
+
+        toast.success("Contato cadastrado com sucesso!!!", { theme: "dark" });
       })
       .catch((err: AxiosError) => {
-        console.log(err);
+        console.log(err.response?.data);
+
+        toast.error("Algo deu errado!!!", { theme: "dark" });
       });
   };
 
   useEffect(() => {
-    api
-      .get("/contact", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response: AxiosResponse) => {
-        setContacts(response.data);
-      })
-      .catch((err: AxiosError) => {
-        console.log(err);
-      });
-  }, [contact]);
+    if (token) {
+      api
+        .get("/contact", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response: AxiosResponse) => {
+          setContacts(response.data);
+        })
+        .catch((err: AxiosError) => {
+          console.log(err.response?.data);
+        });
+    }
+  }, [contact, token]);
 
   return (
     <ContactContext.Provider

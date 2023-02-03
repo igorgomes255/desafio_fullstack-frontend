@@ -6,14 +6,19 @@ import { useContactContext } from "../../contexts/contactContext";
 import { MdAdd, MdOutlineMenu } from "react-icons/md";
 import { ModalEditUser } from "../../components/ModalUser";
 import { InfoUser } from "../../components/InfoUser";
+import { useEditContactContext } from "../../contexts/editContactContext";
+import { ModalEditContact } from "../../components/ModalEditContact";
 
 const Dashboard = () => {
   const { user, modalUser, setModalUser } = useUserContext();
   const { modalAdd, setModalAdd, contacts } = useContactContext();
+  const { setIdContact, modalEdit, setModalEdit } = useEditContactContext();
+
   return (
     <Container>
       {modalAdd && <ModalContact />}
       {modalUser && <InfoUser />}
+      {modalEdit && <ModalEditContact />}
       <Header />
       <Main>
         <section>
@@ -40,10 +45,16 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {contacts.map((contact, index) => (
-                <tr key={index}>
+              {contacts.map((contact) => (
+                <tr
+                  key={contact.id}
+                  onClick={() => {
+                    setIdContact(contact.id);
+                    setModalEdit(true);
+                  }}
+                >
                   <td>{contact.full_name}</td>
-                  <td>{contact.email}</td>
+                  <td> {contact.email}</td>
                   <td>{contact.phone}</td>
                 </tr>
               ))}

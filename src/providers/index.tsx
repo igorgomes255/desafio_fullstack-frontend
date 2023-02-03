@@ -1,4 +1,5 @@
 import ContactProvider from "../contexts/contactContext";
+import EditContactProvider from "../contexts/editContactContext";
 import EditUserProvider from "../contexts/editUser";
 import LoginProvider from "../contexts/loginContext";
 import RegisterProvider from "../contexts/registerContext";
@@ -11,7 +12,9 @@ const Providers = ({ children }: IAuthProvider) => {
       <LoginProvider>
         <RegisterProvider>
           <EditUserProvider>
-            <ContactProvider>{children}</ContactProvider>
+            <EditContactProvider>
+              <ContactProvider>{children}</ContactProvider>
+            </EditContactProvider>
           </EditUserProvider>
         </RegisterProvider>
       </LoginProvider>

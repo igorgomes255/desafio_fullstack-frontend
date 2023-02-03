@@ -13,6 +13,8 @@ import { AxiosError, AxiosResponse } from "axios";
 import api from "../services/api";
 import { useUserContext } from "./userContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface IUserEditContext {
   register: UseFormRegister<IDataUser>;
@@ -52,12 +54,16 @@ const EditUserProvider = ({ children }: IAuthProvider) => {
         },
       })
       .then((response: AxiosResponse) => {
-        console.log(response.data);
         setEditUser(response.data);
         setModalEditUser(false);
+        setModalUser(false);
+
+        toast.success("Usuário atualizado com sucesso!!!", { theme: "dark" });
       })
       .catch((err: AxiosError) => {
         console.log(err.response?.data);
+
+        toast.error("Algo deu errado!!!", { theme: "dark" });
       });
   };
 
@@ -70,16 +76,20 @@ const EditUserProvider = ({ children }: IAuthProvider) => {
         },
       })
       .then((response: AxiosResponse) => {
-        console.log(response.data);
-
         setModalUser(false);
+
+        toast.success("Usuário deletado com sucesso!!!", { theme: "dark" });
 
         setTimeout(() => {
           navigate("/", { replace: true });
           localStorage.clear();
         }, 3000);
       })
-      .catch((err: AxiosError) => console.log(err));
+      .catch((err: AxiosError) => {
+        console.log(err.response?.data);
+
+        toast.error("Algo deu errado!!!", { theme: "dark" });
+      });
   };
 
   return (
