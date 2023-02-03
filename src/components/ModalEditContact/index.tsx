@@ -1,8 +1,14 @@
-import { useContactContext } from "../../contexts/contactContext";
 import DivInput from "../input";
-import { Container, FormTech, ModalHeader, ModalTech } from "./styles";
+import {
+  Container,
+  DivButton,
+  FormTech,
+  ModalHeader,
+  ModalTech,
+} from "./styles";
 import { MdClose } from "react-icons/md";
 import { useEditContactContext } from "../../contexts/editContactContext";
+import { useContactContext } from "../../contexts/contactContext";
 
 const ModalEditContact = () => {
   const {
@@ -12,13 +18,19 @@ const ModalEditContact = () => {
     editContact,
     deleteContact,
     setModalEdit,
+    idContact,
   } = useEditContactContext();
+  const { contacts } = useContactContext();
+
+  const filterContacts = contacts.filter((contact) => contact.id === idContact);
 
   return (
     <Container>
       <ModalTech>
         <ModalHeader>
-          <h3>Editar Contato</h3>
+          {filterContacts.map((contact) => (
+            <h3 key={contact.id}>Editar contato: {contact.full_name}</h3>
+          ))}
           <button onClick={() => setModalEdit(false)}>
             <MdClose />
           </button>
@@ -45,6 +57,11 @@ const ModalEditContact = () => {
           />
           <button type="submit">Salvar</button>
         </FormTech>
+        <DivButton>
+          <button onClick={() => deleteContact()} className="delete_button">
+            Excluir
+          </button>
+        </DivButton>
       </ModalTech>
     </Container>
   );

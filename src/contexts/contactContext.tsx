@@ -20,6 +20,7 @@ import { IAuthProvider, IDataContact } from "../interfaces";
 import { useUserContext } from "./userContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEditContactContext } from "./editContactContext";
 
 interface IContactContext {
   register: UseFormRegister<IDataContact>;
@@ -35,6 +36,8 @@ export const ContactContext = createContext({} as IContactContext);
 
 const ContactProvider = ({ children }: IAuthProvider) => {
   const { token } = useUserContext();
+  const { editContacts } = useEditContactContext();
+
   const [modalAdd, setModalAdd] = useState(false);
   const [contact, setContact] = useState<IDataContact[]>([]);
   const [contacts, setContacts] = useState<IDataContact[]>([]);
@@ -90,7 +93,7 @@ const ContactProvider = ({ children }: IAuthProvider) => {
           console.log(err.response?.data);
         });
     }
-  }, [contact, token]);
+  }, [contact, token, editContacts]);
 
   return (
     <ContactContext.Provider

@@ -13,7 +13,7 @@ export const Container = styled.div`
 
 export const ModalTech = styled.div`
   width: 20rem;
-  height: 28rem;
+  height: 30rem;
   background-color: #36454f;
   border-radius: 4px;
 `;
@@ -79,6 +79,24 @@ export const FormTech = styled.form`
     border-radius: 4px;
     font-family: "Source Sans Pro";
     background-color: #6f8faf;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+`;
+
+export const DivButton = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-left: 17px;
+
+  .delete_button {
+    width: 200px;
+    height: 35px;
+    font-weight: 700;
+    border-radius: 4px;
+    font-family: "Source Sans Pro";
+    background-color: #6e260e;
     cursor: pointer;
   }
 `;
