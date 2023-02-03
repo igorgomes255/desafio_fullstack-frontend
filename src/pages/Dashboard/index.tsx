@@ -36,30 +36,34 @@ const Dashboard = () => {
           </div>
         </DivAdd>
         <DivContent>
-          <table className="fix_table">
-            <thead>
-              <tr>
-                <th>Nome completo</th>
-                <th>E-mail</th>
-                <th>Telefone</th>
-              </tr>
-            </thead>
-            <tbody>
-              {contacts.map((contact) => (
-                <tr
-                  key={contact.id}
-                  onClick={() => {
-                    setIdContact(contact.id);
-                    setModalEdit(true);
-                  }}
-                >
-                  <td>{contact.full_name}</td>
-                  <td> {contact.email}</td>
-                  <td>{contact.phone}</td>
+          {contacts?.length > 0 ? (
+            <table className="fix_table">
+              <thead>
+                <tr>
+                  <th>Nome completo</th>
+                  <th>E-mail</th>
+                  <th>Telefone</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {contacts.map((contact) => (
+                  <tr
+                    key={contact.id}
+                    onClick={() => {
+                      setIdContact(contact.id);
+                      setModalEdit(true);
+                    }}
+                  >
+                    <td>{contact.full_name}</td>
+                    <td> {contact.email}</td>
+                    <td>{contact.phone}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <></>
+          )}
         </DivContent>
       </Main>
     </Container>
